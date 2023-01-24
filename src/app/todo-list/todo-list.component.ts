@@ -36,7 +36,7 @@ export class TodoListComponent implements OnInit {
     this.tasks.splice(taskIndex,1);
   }
   
-  toggleStatus(taskName: string) {
+  toggleStatus(taskName: any) {
     const task = this.tasks.find(x => x.name === taskName);
     if (task)
       task.completed = !task.completed;
