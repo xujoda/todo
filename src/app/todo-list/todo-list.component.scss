@@ -1,0 +1,13 @@
+.formAddTask{
+    margin-top: 5ch;
+}
+
+.taskList{
+    margin-top: 2ch;
+}
+
+.taskList, .formAddTask{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

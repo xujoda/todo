@@ -1,0 +1,13 @@
+<form class="formAddTask" (ngSubmit)="addTask()">
+    <input [(ngModel)]="taskName" name="taskName" type="text" placeholder="Task Name" required>
+    <input [(ngModel)]="taskDescription" name="taskDescription" type="text" placeholder="Task Description">
+    <button class="btn" type="submit">Add Task</button>
+</form>
+
+    <div *ngFor="let task of tasks" class="taskList" type="text">
+        <input type="checkbox" (change)="toggleStatus(taskName)" [checked]="task.completed">
+      {{ task.name }} - {{ task.description  }} 
+      <button class="btn" (click)="deleteTask(taskName)">Delete</button>
+      <br>
+    </div>
+  
