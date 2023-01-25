@@ -1,45 +1,66 @@
 import { Component, Input, NgModule, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { TaskClass } from 'types/types';
+import { Task } from '../../service/task.interface';
+import {TasksService} from '../../service/tasks.service'
+import {Subscription} from 'rxjs'
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.scss'],
+  providers: [TasksService]
 })
 
 export class TodoListComponent implements OnInit {
+
+  constructor(private tasksService: TasksService) {
+   }
   
-  tasks: TaskClass[] = [];
+
+  getTasksSubscription?: Subscription;
+  tasks: Task[] = [];
   taskName: string = '';
   taskDescription: string = '';
 
-  constructor() {
-    this.tasks = [];
-   }
-
-  ngOnInit(): void {
+  
+  ngOnInit() {
+    this.getTasksSubscription = this.tasksService.getTasksFromServer().subscribe(tasks => {
+      this.tasks = tasks;
+    });
   }
 
-  addTask(){
-    this.tasks.push({
+  addTask() {
+    const task: Task = {
       name: this.taskName,
       description: this.taskDescription,
-      completed: false
+      completed: false,
+      id: null
+    };
+    this.tasksService.addTaskToServer(task).subscribe(newTask => {
+      this.tasks.push(newTask);
     });
+    console.log(task);
     this.taskName = '';
     this.taskDescription = '';
   }
 
-  deleteTask(taskName: string){
-   const taskIndex = this.tasks.findIndex(x => x.name === taskName);
-    this.tasks.splice(taskIndex,1);
+  deleteTask(taskName: string) {
+    console.log(taskName);
+    const task = this.tasks.find(x => x.name === taskName);
+    if (task){
+      this.tasksService.deleteTaskFromServer(task).subscribe();
+      this.tasks.splice(this.tasks.indexOf(task), 1);
+    }
   }
   
   toggleStatus(taskName: any) {
     const task = this.tasks.find(x => x.name === taskName);
     if (task)
       task.completed = !task.completed;
+  }
+
+  ngOnDestroy() {
+    this.getTasksSubscription?.unsubscribe();
   }
 
 }
