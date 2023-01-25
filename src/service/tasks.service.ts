@@ -19,4 +19,9 @@ export class TasksService {
   deleteTaskFromServer(task: Task) {
     return this.http.delete<Task>(`http://localhost:3000/tasks/${task.id}`);
   }
+
+  toggleStatusToServer(task: Task) {
+    const updatedTask = {...task, completed: !task.completed};
+    return this.http.patch<Task>(`http://localhost:3000/tasks/${task.id}`, updatedTask);
+  }
 }

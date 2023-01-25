@@ -53,10 +53,12 @@ export class TodoListComponent implements OnInit {
     }
   }
   
-  toggleStatus(taskName: any) {
+  toggleStatus(taskName: string) {
     const task = this.tasks.find(x => x.name === taskName);
-    if (task)
+    if (task){
+      this.tasksService.toggleStatusToServer(task).subscribe();
       task.completed = !task.completed;
+    }
   }
 
   ngOnDestroy() {

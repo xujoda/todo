@@ -1,22 +1,22 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "name": "Task 1",
-      "description": "This is the first task",
-      "completed": false
+      "name": "Server for BD",
+      "description": "Install fake json-server",
+      "completed": true,
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Task 2",
-      "description": "This is the second task",
-      "completed": true
+      "name": "Create CRUD func",
+      "description": "Create CRUD functions for requests to BD",
+      "completed": true,
+      "id": 2
     },
     {
-      "name": "Test NameTask",
-      "description": "Test DEscriptionTask",
-      "completed": false,
-      "id": 4
+      "name": "Github",
+      "description": "Pull project to GitHub",
+      "completed": true,
+      "id": 3
     }
   ]
 }
